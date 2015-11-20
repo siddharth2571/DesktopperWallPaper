@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/WallpaperOfTheDay_Linear"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/nav_header_height"
+    android:background="@color/black_70"
+    android:gravity="bottom"
+
+    >
+
+    <ImageView
+        android:id="@+id/WallpaperOfTheDay_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image" />
+
+    <ImageView
+        android:id="@+id/WallpaperOfTheDay_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:src="@android:drawable/sym_def_app_icon"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/WallpaperOfTheDay_logo"
+        android:layout_toRightOf="@+id/WallpaperOfTheDay_logo"
+        android:background="@drawable/fab_label_background"
+        android:gravity="end"
+
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:text="Wallpaper Of The Day"
+        android:textColor="@android:color/white"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="android.studio@android.com"
+        android:visibility="gone" />
+
+</RelativeLayout>
