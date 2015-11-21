@@ -1,15 +1,12 @@
 package com.pemikir.desktopper.Activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.pemikir.desktopper.DesktoperAPP;
-import com.pemikir.desktopper.Model.Constant;
 import com.pemikir.desktopper.Model.DesktoperModelResponce;
 import com.pemikir.desktopper.Pref.SessionManager;
 import com.pemikir.desktopper.R;
@@ -64,6 +61,12 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
             });
+        } else {
+
+            Intent i = new Intent(SplashActivity.this, MainDrawerActivity.class);
+            startActivity(i);
+            // close this activity
+            finish();
         }
 
 

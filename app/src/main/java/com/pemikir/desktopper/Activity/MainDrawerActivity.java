@@ -1,7 +1,5 @@
 package com.pemikir.desktopper.Activity;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,15 +22,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -51,7 +46,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.regex.Pattern;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -74,6 +68,7 @@ public class MainDrawerActivity extends AppCompatActivity
     private ActionModeCallback actionModeCallback = new ActionModeCallback();
     private ActionMode actionMode;
     SessionManager session;
+    String BingWallpaper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,15 +131,26 @@ public class MainDrawerActivity extends AppCompatActivity
 
         git.getWallpaperOfTheDay(new Callback<BingWallpaperModel>() {
             @Override
-            public void success(BingWallpaperModel bingWallpaperModel, retrofit.client.Response response) {
+            public void success(final BingWallpaperModel bingWallpaperModel, retrofit.client.Response response) {
 
-                String BingWallpaper = "http://www.bing.com" + bingWallpaperModel.getImages().get(0).getUrl();
+                BingWallpaper = "http://www.bing.com" + bingWallpaperModel.getImages().get(0).getUrl();
 
                 try {
                     Glide.with(MainDrawerActivity.this).load(BingWallpaper).into(WallpaperOfTheDay_img);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                if (wallpaperoftheaday != null) {
+                    WallpaperOfTheDay_img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(MainDrawerActivity.this, FullscreenWallpaper.class).putExtra("url", BingWallpaper).putExtra("wallpapertitle", bingWallpaperModel.getImages().get(0).getCopyright()));
+                        }
+                    });
+
+                }
+
                 Log.i("Wallpaper", "" + BingWallpaper);
 
             }
@@ -208,7 +214,7 @@ public class MainDrawerActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         wallpaperoftheaday = (LinearLayout) navigationView.findViewById(R.id.WallpaperOfTheDay_Linear);
-        WallpaperOfTheDay_img = (ImageView) navigationView.findViewById(R.id.WallpaperOfTheDay_img);
+
 
 //        View headerLayout =
 //                navigationView.inflateHeaderView(R.layout.nav_header_main_drawer);
@@ -277,9 +283,9 @@ public class MainDrawerActivity extends AppCompatActivity
             // Handle the camera action
             setRandomwallpaper();
         } else if (id == R.id.nav_share) {
-            shareApplication();
-        } else if (id == R.id.nav_send) {
             shareApplicaitonLink();
+        } else if (id == R.id.nav_send) {
+            openApplicaitonLink();
         } else if (id == R.id.nav_feedback) {
             sendFeedBack();
         }
@@ -312,7 +318,7 @@ public class MainDrawerActivity extends AppCompatActivity
     }
 
     public void setRandomwallpaper() {
-        int max = 140, min = 0;
+        int max = 4000, min = 0;
 
         int randomNum = new Random().nextInt((max - min) + 1) + min;
         if (Utils.isConnectingToInternet(MainDrawerActivity.this)) {
@@ -350,6 +356,15 @@ public class MainDrawerActivity extends AppCompatActivity
     }
 
     public void shareApplicaitonLink() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                "Hey Best Wallpaper Ever app at: http://play.google.com/store/apps/details?id=" + this.getPackageName());
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
+    public void openApplicaitonLink() {
         Uri uri = Uri.parse("market://details?id=" + this.getPackageName());
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         // To count with Play market backstack, After pressing back button,
