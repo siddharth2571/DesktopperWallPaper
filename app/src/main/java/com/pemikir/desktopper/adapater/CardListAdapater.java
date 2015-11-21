@@ -115,8 +115,6 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
             this.tv_card_link = (TextView) itemView.findViewById(R.id.tv_card_link);
 
         }
-
-
     }
 
 }

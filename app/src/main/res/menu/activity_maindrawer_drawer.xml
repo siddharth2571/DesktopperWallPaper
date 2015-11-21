@@ -35,7 +35,7 @@
                 android:title="Send" />
             <item
                 android:id="@+id/nav_feedback"
-                android:icon="@android:drawable/ic_menu_send"
+                android:icon="@android:drawable/ic_menu_agenda"
                 android:title="Feedback" />
 
         </menu>

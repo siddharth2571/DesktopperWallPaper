@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -63,7 +64,7 @@ public class FullscreenWallpaper extends AppCompatActivity {
         Log.i(FullscreenWallpaper.class.getSimpleName(), getURL);
 //        fullImage.bringToFront();
 
-        Picasso.with(this).load(getURL).memoryPolicy(MemoryPolicy.NO_CACHE).into(fullImage, new Callback() {
+        Picasso.with(this).load(getURL).memoryPolicy(MemoryPolicy.NO_CACHE).error(R.drawable.image).into(fullImage, new Callback() {
             @Override
             public void onSuccess() {
                 bitmap = ((BitmapDrawable) fullImage.getDrawable()).getBitmap();
@@ -73,8 +74,9 @@ public class FullscreenWallpaper extends AppCompatActivity {
                         setMenuButton(palette);
                     }
                 });
-                if (TextUtils.isEmpty(wallpaperTITLE)) {
+                if (!TextUtils.isEmpty(wallpaperTITLE)) {
                     setWallpaperTitle(wallpaperTITLE);
+
                 } else {
                     wallpapertitle.setVisibility(View.GONE);
                 }
@@ -84,7 +86,7 @@ public class FullscreenWallpaper extends AppCompatActivity {
 
             @Override
             public void onError() {
-
+                Toast.makeText(getApplicationContext(), "NetworkError..", Toast.LENGTH_SHORT).show();
             }
         });
 
