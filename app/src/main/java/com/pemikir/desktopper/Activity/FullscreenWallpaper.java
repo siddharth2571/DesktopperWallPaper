@@ -64,7 +64,7 @@ public class FullscreenWallpaper extends AppCompatActivity {
         Log.i(FullscreenWallpaper.class.getSimpleName(), getURL);
 //        fullImage.bringToFront();
 
-        Picasso.with(this).load(getURL).memoryPolicy(MemoryPolicy.NO_CACHE).error(R.drawable.image).into(fullImage, new Callback() {
+        Picasso.with(this).load(getURL).memoryPolicy(MemoryPolicy.NO_CACHE).error(R.drawable.ic_launcher).into(fullImage, new Callback() {
             @Override
             public void onSuccess() {
                 bitmap = ((BitmapDrawable) fullImage.getDrawable()).getBitmap();

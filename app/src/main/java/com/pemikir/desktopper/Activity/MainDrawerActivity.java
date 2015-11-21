@@ -222,7 +222,7 @@ public class MainDrawerActivity extends AppCompatActivity
         WallpaperOfTheDay_img = (ImageView) header.findViewById(R.id.WallpaperOfTheDay_img);
 
 
-        Drawable d = getResources().getDrawable(R.drawable.img_2);
+        Drawable d = getResources().getDrawable(R.drawable.drawerimg);
         Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
         Log.d("Bitmap", "" + bitmap);
 
@@ -264,8 +264,17 @@ public class MainDrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.nav_random) {
+            // Handle the camera action
+            setRandomwallpaper();
+        } else if (id == R.id.nav_share) {
+            shareApplicaitonLink();
+        } else if (id == R.id.nav_send) {
+            openApplicaitonLink();
+        } else if (id == R.id.nav_feedback) {
+            sendFeedBack();
+        } else if (id == R.id.nav_setting) {
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -277,6 +286,7 @@ public class MainDrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
         if (id == R.id.nav_random) {
             // Handle the camera action
             setRandomwallpaper();
@@ -286,6 +296,8 @@ public class MainDrawerActivity extends AppCompatActivity
             openApplicaitonLink();
         } else if (id == R.id.nav_feedback) {
             sendFeedBack();
+        } else if (id == R.id.nav_setting) {
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -447,8 +459,7 @@ public class MainDrawerActivity extends AppCompatActivity
                     return true;
 
                 default:
-                    MainDrawerActivity.this.getSupportActionBar().show();
-                    mode.finish();
+
                     return true;
             }
         }
@@ -457,6 +468,8 @@ public class MainDrawerActivity extends AppCompatActivity
         public void onDestroyActionMode(ActionMode mode) {
             adapter.clearSelection();
             actionMode = null;
+            MainDrawerActivity.this.getSupportActionBar().show();
+            mode.finish();
         }
     }
 

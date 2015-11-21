@@ -13,6 +13,6 @@ public class Constant {
     public static String BINGWallaper = "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US";
 
     public static String GalleryName = "Desktoper";
-    public static File myDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), GalleryName);
+    public static File myDir = new File(Environment.getExternalStorageDirectory(), GalleryName);
 
 }
