@@ -141,7 +141,7 @@ public class MainDrawerActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-                if (wallpaperoftheaday != null) {
+                if (WallpaperOfTheDay_img != null) {
                     WallpaperOfTheDay_img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -213,16 +213,11 @@ public class MainDrawerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        wallpaperoftheaday = (LinearLayout) navigationView.findViewById(R.id.WallpaperOfTheDay_Linear);
-
-
 //        View headerLayout =
 //                navigationView.inflateHeaderView(R.layout.nav_header_main_drawer);
 
-
         View header = LayoutInflater.from(MainDrawerActivity.this).inflate(R.layout.nav_header_main_drawer, navigationView);
         WallpaperOfTheDay_img = (ImageView) header.findViewById(R.id.WallpaperOfTheDay_img);
-
 
         Drawable d = getResources().getDrawable(R.drawable.img_2);
         Bitmap bitmap = ((BitmapDrawable) d).getBitmap();

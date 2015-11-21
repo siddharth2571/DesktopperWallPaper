@@ -74,8 +74,9 @@ public class FullscreenWallpaper extends AppCompatActivity {
                         setMenuButton(palette);
                     }
                 });
-                if (TextUtils.isEmpty(wallpaperTITLE)) {
+                if (!TextUtils.isEmpty(wallpaperTITLE)) {
                     setWallpaperTitle(wallpaperTITLE);
+
                 } else {
                     wallpapertitle.setVisibility(View.GONE);
                 }
@@ -85,9 +86,7 @@ public class FullscreenWallpaper extends AppCompatActivity {
 
             @Override
             public void onError() {
-
                 Toast.makeText(getApplicationContext(), "NetworkError..", Toast.LENGTH_SHORT).show();
-
             }
         });
 
