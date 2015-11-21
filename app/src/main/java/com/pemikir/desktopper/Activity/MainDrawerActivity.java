@@ -198,7 +198,7 @@ public class MainDrawerActivity extends AppCompatActivity
         adapter.setItemclick(this);
         rv_list_card.setAdapter(adapter);
         rv_list_card.setItemAnimator(new DefaultItemAnimator());
-        StaggeredGridLayoutManager stagerlayout = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager stagerlayout = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
         rv_list_card.setLayoutManager(stagerlayout);
         rv_list_card.scrollToPosition(Responsemodel.size() - 1);
 
