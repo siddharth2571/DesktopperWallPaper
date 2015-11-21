@@ -180,14 +180,18 @@ public class Utils {
     }
 
     public static void setQueryFileDownload(Context context, String ur1) {
-        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri Download_Uri = Uri.parse(ur1);
-        DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-        request.setAllowedOverRoaming(false);
-        request.setDescription("MultipleWallpaper Download using Desktopper.");
-        request.setDestinationInExternalPublicDir(Constant.GalleryName, new Date().getTime() + ".jpg");
-        downloadManager.enqueue(request);
+        if (isConnectingToInternet(context)) {
+            DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+            Uri Download_Uri = Uri.parse(ur1);
+            DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+            request.setAllowedOverRoaming(false);
+            request.setDescription("MultipleWallpaper Download using Desktopper.");
+            request.setDestinationInExternalPublicDir(Constant.GalleryName, new Date().getTime() + ".jpg");
+            downloadManager.enqueue(request);
+        } else {
+            Toast.makeText(context, "Network Error..", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
