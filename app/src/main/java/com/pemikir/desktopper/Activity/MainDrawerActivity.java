@@ -213,11 +213,14 @@ public class MainDrawerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
 //        View headerLayout =
 //                navigationView.inflateHeaderView(R.layout.nav_header_main_drawer);
 
+
         View header = LayoutInflater.from(MainDrawerActivity.this).inflate(R.layout.nav_header_main_drawer, navigationView);
         WallpaperOfTheDay_img = (ImageView) header.findViewById(R.id.WallpaperOfTheDay_img);
+
 
         Drawable d = getResources().getDrawable(R.drawable.img_2);
         Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
@@ -397,7 +400,6 @@ public class MainDrawerActivity extends AppCompatActivity
     private void toggleSelection(int position) {
         adapter.toggleSelection(position);
         int count = adapter.getSelectedItemCount();
-
         selectedItemList.add(position);
 
         if (count == 0) {
@@ -434,16 +436,20 @@ public class MainDrawerActivity extends AppCompatActivity
                     // TODO: actually remove items
                     Log.d(TAG, "menu_remove");
                     for (int itemselected : selectedItemList) {
-                        adapter.notifyItemRemoved(itemselected);
+//                        adapter.notifyItemRemoved(itemselected);
+                        Log.i("DwnloadURL", "=>" + itemselected);
+                        Utils.setQueryFileDownload(getApplicationContext(), Responsemodel.get(itemselected).getImage().getUrl());
                     }
+
 //                    adapter.notify();
                     MainDrawerActivity.this.getSupportActionBar().show();
                     mode.finish();
                     return true;
 
                 default:
-
-                    return false;
+                    MainDrawerActivity.this.getSupportActionBar().show();
+                    mode.finish();
+                    return true;
             }
         }
 
