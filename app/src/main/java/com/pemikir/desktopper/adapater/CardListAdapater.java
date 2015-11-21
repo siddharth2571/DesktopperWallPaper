@@ -61,7 +61,7 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
             @Override
             public boolean onLongClick(View v) {
 
-                Toast.makeText(context, "LongClick", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Select Multiple Image", Toast.LENGTH_SHORT).show();
 
                 if (itemclick != null) {
                     itemclick.imageItemLongClicklistioner(position);

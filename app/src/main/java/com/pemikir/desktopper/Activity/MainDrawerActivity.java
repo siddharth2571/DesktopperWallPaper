@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -87,9 +88,9 @@ public class MainDrawerActivity extends AppCompatActivity
     }
 
     public void init() {
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         rv_list_card = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -197,7 +198,7 @@ public class MainDrawerActivity extends AppCompatActivity
         adapter.setItemclick(this);
         rv_list_card.setAdapter(adapter);
         rv_list_card.setItemAnimator(new DefaultItemAnimator());
-        StaggeredGridLayoutManager stagerlayout = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager stagerlayout = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
         rv_list_card.setLayoutManager(stagerlayout);
         rv_list_card.scrollToPosition(Responsemodel.size() - 1);
 
@@ -332,6 +333,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
         int randomNum = new Random().nextInt((max - min) + 1) + min;
         if (Utils.isConnectingToInternet(MainDrawerActivity.this)) {
+            Toast.makeText(getApplicationContext(), "Please waite..", Toast.LENGTH_SHORT).show();
 
             mApplication.getGit().getMoreWallpaper(randomNum, new Callback<DesktoperModelResponce>() {
                 @Override
@@ -345,6 +347,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
                 @Override
                 public void failure(RetrofitError error) {
+                    Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
                     Log.i(MainActivity.class.getName(), error.getResponse().toString());
                     Log.i(MainActivity.class.getName() + "Error", Utils.convertResponseToString(error.getResponse()));
 
