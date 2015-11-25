@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
     List<Response> cardList;
     Context context;
     itemClickLister itemclick;
+    private SparseBooleanArray selectedItems;
 
     public CardListAdapater(Context context, List<Response> cardlist) {
         this.cardList = cardlist;
@@ -51,7 +53,7 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
             public void onClick(View v) {
 
                 if (itemclick != null) {
-                    itemclick.imageItemClicklistioner(position);
+                    itemclick.imageItemClicklistioner(holder.card_image, position);
                 }
 
             }
@@ -64,7 +66,7 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
                 Toast.makeText(context, "Select Multiple Image", Toast.LENGTH_SHORT).show();
 
                 if (itemclick != null) {
-                    itemclick.imageItemLongClicklistioner(position);
+                    itemclick.imageItemLongClicklistioner(holder.card_image, position);
                 }
                 return true;
             }
@@ -93,9 +95,9 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
 
     public interface itemClickLister {
 
-        void imageItemClicklistioner(int pos);
+        void imageItemClicklistioner(View v, int pos);
 
-        void imageItemLongClicklistioner(int pos);
+        void imageItemLongClicklistioner(View v, int pos);
 
     }
 

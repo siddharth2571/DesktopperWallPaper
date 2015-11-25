@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pemikir.desktopper.DesktoperAPP;
@@ -11,6 +12,8 @@ import com.pemikir.desktopper.Model.DesktoperModelResponce;
 import com.pemikir.desktopper.Pref.SessionManager;
 import com.pemikir.desktopper.R;
 import com.pemikir.desktopper.Utility.Utils;
+
+import java.util.Random;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -31,7 +34,12 @@ public class SplashActivity extends AppCompatActivity {
         // Start your app main activity
         if (Utils.isConnectingToInternet(SplashActivity.this)) {
 
-            mApplication.getGit().getAllWallpaper(new Callback<DesktoperModelResponce>() {
+            int max = 4000, min = 0;
+//            int randomNum = new Random().nextInt((max - min) + 1) + min;
+            int randomNum = 996;
+//            Toast.makeText(getApplicationContext(), "Page to :" + randomNum, Toast.LENGTH_SHORT).show();
+
+            mApplication.getGit().getMoreWallpaper(randomNum, new Callback<DesktoperModelResponce>() {
                 @Override
                 public void success(DesktoperModelResponce response1, retrofit.client.Response response) {
 

@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -70,6 +71,9 @@ public class MainDrawerActivity extends AppCompatActivity
     private ActionMode actionMode;
     SessionManager session;
     String BingWallpaper;
+    MenuInflater menuinflat;
+
+    Menu menu_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +104,7 @@ public class MainDrawerActivity extends AppCompatActivity
             @Override
             public void onRefresh() {
                 // Refresh items
-                RefreshItem();
+                setRandomwallpaper();
             }
         });
 
@@ -252,7 +256,10 @@ public class MainDrawerActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_maindrawer_drawer, menu);
+//        MainDrawerActivity.this.getSupportActionBar().hide();
+        menu_main = menu;
+        menuinflat = getMenuInflater();
+        menuinflat.inflate(R.menu.activity_maindrawer_drawer, menu);
         return true;
     }
 
@@ -308,10 +315,11 @@ public class MainDrawerActivity extends AppCompatActivity
     }
 
     @Override
-    public void imageItemClicklistioner(int pos) {
+    public void imageItemClicklistioner(View view, int pos) {
 
         if (actionMode != null) {
             toggleSelection(pos);
+//            view.setba
         } else {
             startActivity(new Intent(MainDrawerActivity.this, FullscreenWallpaper.class).putExtra("url", Responsemodel.get(pos).getImage().getUrl()));
         }
@@ -319,10 +327,11 @@ public class MainDrawerActivity extends AppCompatActivity
     }
 
     @Override
-    public void imageItemLongClicklistioner(int pos) {
+    public void imageItemLongClicklistioner(View view, int pos) {
 
         if (actionMode == null) {
             actionMode = startSupportActionMode(actionModeCallback);
+
         }
         toggleSelection(pos);
 
@@ -435,7 +444,7 @@ public class MainDrawerActivity extends AppCompatActivity
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             MainDrawerActivity.this.getSupportActionBar().hide();
-            mode.getMenuInflater().inflate(R.menu.selection_multi, menu);
+            menuinflat.inflate(R.menu.selection_multi, menu);
             return true;
         }
 
@@ -456,8 +465,9 @@ public class MainDrawerActivity extends AppCompatActivity
                         Utils.setQueryFileDownload(getApplicationContext(), Responsemodel.get(itemselected).getImage().getUrl());
                     }
 
+                    Toast.makeText(getApplicationContext(), "Wallpaper Download...", Toast.LENGTH_SHORT).show();
 //                    adapter.notify();
-                    MainDrawerActivity.this.getSupportActionBar().show();
+//                    MainDrawerActivity.this.getSupportActionBar().show();
                     mode.finish();
                     return true;
 
