@@ -24,6 +24,10 @@ public interface iDesktoper {
     void getWallpaperOfTheDay(Callback<BingWallpaperModel> callback);
 
 
+    @GET("/wallpapers")
+    void getChristmasWallpaper(@Query("safe_filter") String pageno, Callback<DesktoperModelResponce> callback);
+
+
    /* @GET("/csa")
     void getMatchList(Callback<Response> callback);*/
 

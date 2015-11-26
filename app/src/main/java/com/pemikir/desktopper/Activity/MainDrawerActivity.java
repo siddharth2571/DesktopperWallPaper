@@ -41,6 +41,7 @@ import com.pemikir.desktopper.Model.Response;
 import com.pemikir.desktopper.Pref.SessionManager;
 import com.pemikir.desktopper.R;
 import com.pemikir.desktopper.Rectrofit.iDesktoper;
+import com.pemikir.desktopper.Utility.PreferencesUtility;
 import com.pemikir.desktopper.Utility.Utils;
 import com.pemikir.desktopper.adapater.CardListAdapater;
 
@@ -73,6 +74,8 @@ public class MainDrawerActivity extends AppCompatActivity
     String BingWallpaper;
     MenuInflater menuinflat;
 
+    PreferencesUtility mPrefence;
+
     Menu menu_main;
 
     @Override
@@ -81,7 +84,13 @@ public class MainDrawerActivity extends AppCompatActivity
         setContentView(R.layout.activity_maindrawer);
 
         session = new SessionManager(getApplicationContext());
+        mPrefence = new PreferencesUtility(MainDrawerActivity.this);
         mApplication = (DesktoperAPP) getApplicationContext();
+
+        Constant.GalleryName = mPrefence.getFolderName();
+
+        Log.i("GalleryName","=>"+Constant.GalleryName);
+
         init();
         setDrawerLayout();
         DesktoperModelResponce desktopper = new Gson().fromJson(session.getFirstjsonoffline(), DesktoperModelResponce.class);
@@ -112,20 +121,16 @@ public class MainDrawerActivity extends AppCompatActivity
       /*  mApplication.getGit().getAllWallpaper(new Callback<DesktoperModelResponce>() {
             @Override
             public void success(DesktoperModelResponce response1, retrofit.client.Response response) {
-
                 Log.i(MainActivity.class.getName(), Utils.convertResponseToString(response));
-
                 new Gson().fromJson(Utils.convertResponseToString(response), DesktoperModelResponce.class);
 //                Responsemodel = response1.getResponse();
                 Responsemodel = new DesktoperModelResponce().getResponse();
                 setAdapter();
             }
-
             @Override
             public void failure(RetrofitError error) {
 //                Log.i(MainActivity.class.getName(), error.getResponse().toString());
 //                Log.i(MainActivity.class.getName() + "Error", Utils.convertResponseToString(error.getResponse()));
-
             }
         });*/
 
@@ -178,7 +183,7 @@ public class MainDrawerActivity extends AppCompatActivity
                 @Override
                 public void success(DesktoperModelResponce response1, retrofit.client.Response response) {
 
-                    Log.i(MainActivity.class.getName(), Utils.convertResponseToString(response));
+                    Log.i(MainDrawerActivity.class.getName(), Utils.convertResponseToString(response));
 
                     Responsemodel.addAll(response1.getResponse());
                     setAdapter();
@@ -186,8 +191,8 @@ public class MainDrawerActivity extends AppCompatActivity
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Log.i(MainActivity.class.getName(), error.getResponse().toString());
-                    Log.i(MainActivity.class.getName() + "Error", Utils.convertResponseToString(error.getResponse()));
+                    Log.i(MainDrawerActivity.class.getName(), error.getResponse().toString());
+                    Log.i(MainDrawerActivity.class.getName() + "Error", Utils.convertResponseToString(error.getResponse()));
 
                 }
             });
@@ -202,7 +207,10 @@ public class MainDrawerActivity extends AppCompatActivity
         adapter.setItemclick(this);
         rv_list_card.setAdapter(adapter);
         rv_list_card.setItemAnimator(new DefaultItemAnimator());
-        StaggeredGridLayoutManager stagerlayout = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+
+        int no_rows = mPrefence.getNo_of_rows();
+        Log.i("no_rows","=>"+no_rows);
+        StaggeredGridLayoutManager stagerlayout = new StaggeredGridLayoutManager(no_rows, LinearLayoutManager.VERTICAL);
         rv_list_card.setLayoutManager(stagerlayout);
         rv_list_card.scrollToPosition(Responsemodel.size() - 1);
 
@@ -305,36 +313,13 @@ public class MainDrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_feedback) {
             sendFeedBack();
         } else if (id == R.id.nav_setting) {
-
+            startActivity(new Intent(MainDrawerActivity.this, SettingsActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void imageItemClicklistioner(View view, int pos) {
-
-        if (actionMode != null) {
-            toggleSelection(pos);
-//            view.setba
-        } else {
-            startActivity(new Intent(MainDrawerActivity.this, FullscreenWallpaper.class).putExtra("url", Responsemodel.get(pos).getImage().getUrl()));
-        }
-
-    }
-
-    @Override
-    public void imageItemLongClicklistioner(View view, int pos) {
-
-        if (actionMode == null) {
-            actionMode = startSupportActionMode(actionModeCallback);
-
-        }
-        toggleSelection(pos);
-
     }
 
     public void setRandomwallpaper() {
@@ -348,7 +333,7 @@ public class MainDrawerActivity extends AppCompatActivity
                 @Override
                 public void success(DesktoperModelResponce response1, retrofit.client.Response response) {
 
-                    Log.i(MainActivity.class.getName(), Utils.convertResponseToString(response));
+                    Log.i(MainDrawerActivity.class.getName(), Utils.convertResponseToString(response));
 
                     Responsemodel.addAll(response1.getResponse());
                     setAdapter();
@@ -357,8 +342,8 @@ public class MainDrawerActivity extends AppCompatActivity
                 @Override
                 public void failure(RetrofitError error) {
                     Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
-                    Log.i(MainActivity.class.getName(), error.getResponse().toString());
-                    Log.i(MainActivity.class.getName() + "Error", Utils.convertResponseToString(error.getResponse()));
+                    Log.i(MainDrawerActivity.class.getName(), error.getResponse().toString());
+                    Log.i(MainDrawerActivity.class.getName() + "Error", Utils.convertResponseToString(error.getResponse()));
 
                 }
             });
@@ -369,7 +354,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
 
     public void shareApplication() {
-        Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("*/*");
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         Uri uri = Uri.parse("/data/apps/" + getApplicationContext().getPackageName() + ".apk");
@@ -409,7 +394,6 @@ public class MainDrawerActivity extends AppCompatActivity
         for (Account account : accounts) {
             if (emailPattern.matcher(account.name).matches()) {
                 String possibleEmail = account.name;
-
 //                Toast.makeText(getApplicationContext(), possibleEmail, Toast.LENGTH_SHORT).show();
             }
         }*/
@@ -432,6 +416,27 @@ public class MainDrawerActivity extends AppCompatActivity
             actionMode.setTitle(String.valueOf(count));
             actionMode.invalidate();
         }
+    }
+
+    @Override
+    public void imageItemClicklistioner(int pos) {
+        if (actionMode != null) {
+            toggleSelection(pos);
+//            view.setba
+        } else {
+            startActivity(new Intent(MainDrawerActivity.this, FullscreenWallpaper.class).putExtra("url", Responsemodel.get(pos).getImage().getUrl()));
+        }
+
+    }
+
+    @Override
+    public void imageItemLongClicklistioner(int pos) {
+
+        if (actionMode == null) {
+            actionMode = startSupportActionMode(actionModeCallback);
+
+        }
+        toggleSelection(pos);
     }
 
 

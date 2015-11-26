@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_title">
+        <Preference
+            android:key="wallpaper"
+            android:summary="So many Wallpaper Application But this is different"
+            android:title="@string/pref_wallpaper_appname" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Personalisation">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="toggle_animations"
+            android:summary="Everyday new Wallpaper"
+            android:title="EveryDay Change the wallpaper" />
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:defaultValue="@string/FolderName"
+            android:inputType="textCapWords"
+            android:key="example_text"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="FolderName" />
+
+        <ListPreference
+            android:defaultValue="-1"
+            android:entries="@array/no_of_rows_entry"
+            android:entryValues="@array/no_of_rows_entry"
+            android:key="example_list"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/Select_No_Of_Rows" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

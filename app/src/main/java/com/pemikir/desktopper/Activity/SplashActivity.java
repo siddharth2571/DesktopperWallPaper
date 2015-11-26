@@ -35,15 +35,15 @@ public class SplashActivity extends AppCompatActivity {
         if (Utils.isConnectingToInternet(SplashActivity.this)) {
 
             int max = 4000, min = 0;
-//            int randomNum = new Random().nextInt((max - min) + 1) + min;
-            int randomNum = 996;
+            int randomNum = new Random().nextInt((max - min) + 1) + min;
+//            int randomNum = 996;
 //            Toast.makeText(getApplicationContext(), "Page to :" + randomNum, Toast.LENGTH_SHORT).show();
 
             mApplication.getGit().getMoreWallpaper(randomNum, new Callback<DesktoperModelResponce>() {
                 @Override
                 public void success(DesktoperModelResponce response1, retrofit.client.Response response) {
 
-                    Log.i(MainActivity.class.getName(), Utils.convertResponseToString(response));
+                    Log.i(MainDrawerActivity.class.getName(), Utils.convertResponseToString(response));
                     session = new SessionManager(SplashActivity.this);
                     session.setFirstjsonoffline(Utils.convertResponseToString(response));
 

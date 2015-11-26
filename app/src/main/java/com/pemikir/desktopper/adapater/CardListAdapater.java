@@ -4,11 +4,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +16,9 @@ import com.bumptech.glide.Glide;
 import com.pemikir.desktopper.Model.Response;
 import com.pemikir.desktopper.R;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by iconflux-android on 9/29/2015.
@@ -26,7 +28,7 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
     List<Response> cardList;
     Context context;
     itemClickLister itemclick;
-    private SparseBooleanArray selectedItems;
+
 
     public CardListAdapater(Context context, List<Response> cardlist) {
         this.cardList = cardlist;
@@ -53,7 +55,7 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
             public void onClick(View v) {
 
                 if (itemclick != null) {
-                    itemclick.imageItemClicklistioner(holder.card_image, position);
+                    itemclick.imageItemClicklistioner(position);
                 }
 
             }
@@ -66,7 +68,7 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
                 Toast.makeText(context, "Select Multiple Image", Toast.LENGTH_SHORT).show();
 
                 if (itemclick != null) {
-                    itemclick.imageItemLongClicklistioner(holder.card_image, position);
+                    itemclick.imageItemLongClicklistioner(position);
                 }
                 return true;
             }
@@ -82,8 +84,12 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
         }
 
 //        Picasso.with(context).load(cardList.get(position).getImage().getPreview().getUrl()).into(holder.card_image, null);
+        String[] MaterialColor = new String[]{"#abcbed", "#008008", "#303030"};
+        int randomColor = new Random().nextInt(MaterialColor.length);
+        holder.card_image.setBackgroundColor(Color.parseColor(MaterialColor[randomColor]));
 
         Glide.with(context).load(cardList.get(position).getImage().getPreview().getUrl()).into(holder.card_image);
+        holder.selected_overlay.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
 
     }
 
@@ -95,9 +101,10 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
 
     public interface itemClickLister {
 
-        void imageItemClicklistioner(View v, int pos);
 
-        void imageItemLongClicklistioner(View v, int pos);
+        void imageItemClicklistioner(int pos);
+
+        void imageItemLongClicklistioner(int pos);
 
     }
 
@@ -105,6 +112,11 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
         ImageView card_image;
         View bottom_plate;
         TextView tv_card_name, tv_card_description, tv_card_link;
+
+        RelativeLayout img_selection_relative;
+
+        RelativeLayout selected_overlay;
+
 
         public CardListViewHolder(View itemView) {
             super(itemView);
@@ -116,6 +128,9 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
             this.tv_card_description = (TextView) itemView.findViewById(R.id.tv_card_description);
             this.tv_card_link = (TextView) itemView.findViewById(R.id.tv_card_link);
 
+//            this.img_selection_relative = (RelativeLayout) itemView.findViewById(R.id.img_selection_relative);
+
+            this.selected_overlay = (RelativeLayout) itemView.findViewById(R.id.img_selection_relative);
         }
     }
 
