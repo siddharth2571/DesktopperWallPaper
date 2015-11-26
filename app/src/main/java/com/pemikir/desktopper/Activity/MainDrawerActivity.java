@@ -2,12 +2,14 @@ package com.pemikir.desktopper.Activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -73,10 +75,9 @@ public class MainDrawerActivity extends AppCompatActivity
     SessionManager session;
     String BingWallpaper;
     MenuInflater menuinflat;
-
     PreferencesUtility mPrefence;
-
     Menu menu_main;
+    int no_rows = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +88,19 @@ public class MainDrawerActivity extends AppCompatActivity
         mPrefence = new PreferencesUtility(MainDrawerActivity.this);
         mApplication = (DesktoperAPP) getApplicationContext();
 
-        Constant.GalleryName = mPrefence.getFolderName();
 
-        Log.i("GalleryName","=>"+Constant.GalleryName);
+//        set gallary name and no of rows ============================
+
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(MainDrawerActivity.this);
+        Constant.GalleryName = prefs.getString("FOLDER_NAME", "wallpaper");
+        String no_rows_string = prefs.getString("selected_row", "");
+        no_rows = Integer.parseInt(no_rows_string);
+
+        Log.i("GalleryName", "=>" + Constant.GalleryName + mPrefence.getFolderName() + "==>" + mPrefence.getNo_of_rows());
+
+//        set gallary name and no of rows ============================
+
 
         init();
         setDrawerLayout();
@@ -208,8 +219,8 @@ public class MainDrawerActivity extends AppCompatActivity
         rv_list_card.setAdapter(adapter);
         rv_list_card.setItemAnimator(new DefaultItemAnimator());
 
-        int no_rows = mPrefence.getNo_of_rows();
-        Log.i("no_rows","=>"+no_rows);
+
+        Log.i("no_rows", "=>" + no_rows);
         StaggeredGridLayoutManager stagerlayout = new StaggeredGridLayoutManager(no_rows, LinearLayoutManager.VERTICAL);
         rv_list_card.setLayoutManager(stagerlayout);
         rv_list_card.scrollToPosition(Responsemodel.size() - 1);
@@ -290,7 +301,7 @@ public class MainDrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_feedback) {
             sendFeedBack();
         } else if (id == R.id.nav_setting) {
-
+            startActivity(new Intent(MainDrawerActivity.this, SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -342,8 +353,6 @@ public class MainDrawerActivity extends AppCompatActivity
                 @Override
                 public void failure(RetrofitError error) {
                     Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
-                    Log.i(MainDrawerActivity.class.getName(), error.getResponse().toString());
-                    Log.i(MainDrawerActivity.class.getName() + "Error", Utils.convertResponseToString(error.getResponse()));
 
                 }
             });

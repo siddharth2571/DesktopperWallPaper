@@ -1,6 +1,7 @@
 package com.pemikir.desktopper.Activity;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Ringtone;
@@ -62,6 +63,8 @@ public class SettingsActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment).commit();
 
+
+
     }
 
     @Override
@@ -69,7 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
 //                Utils.Adloaded(SettingsActivity.this);
-
+                startActivity(new Intent(SettingsActivity.this, MainDrawerActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();
                 return true;
             default:
@@ -83,8 +86,8 @@ public class SettingsActivity extends AppCompatActivity {
 class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String EXAMPLE_SWITCH = "example_switch";
-    private static final String EXAMPLE_TEXT = "example_text";
-    private static final String EXAMPLE_LIST = "example_list";
+    private static final String EXAMPLE_TEXT = "FOLDER_NAME";
+    private static final String EXAMPLE_LIST = "selected_row";
 
 
     SwitchPreference example_switch;
@@ -132,28 +135,6 @@ class SettingsFragment extends PreferenceFragment implements SharedPreferences.O
                                 ? listPreference.getEntries()[index]
                                 : null);
 
-            } else if (preference instanceof RingtonePreference) {
-                // For ringtone preferences, look up the correct display value
-                // using RingtoneManager.
-                if (TextUtils.isEmpty(stringValue)) {
-                    // Empty values correspond to 'silent' (no ringtone).
-
-
-                } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
-
-                    if (ringtone == null) {
-                        // Clear the summary if there was a lookup error.
-                        preference.setSummary(null);
-                    } else {
-                        // Set the summary to reflect the new ringtone display
-                        // name.
-                        String name = ringtone.getTitle(preference.getContext());
-                        preference.setSummary(name);
-                    }
-                }
-
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -174,6 +155,7 @@ class SettingsFragment extends PreferenceFragment implements SharedPreferences.O
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
+
     }
 
     @Override
@@ -211,7 +193,7 @@ class SettingsFragment extends PreferenceFragment implements SharedPreferences.O
                /* Intent i = getActivity().getBaseContext().getPackageManager().getLaunchIntentForPackage(getActivity().getBaseContext().getPackageName());
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);*/
-                mPreferences.setNo_of_rows(Integer.parseInt(preference.getSummary().toString()));
+//                mPreferences.setNo_of_rows(Integer.parseInt(preference.getSummary().toString()));
                 Toast.makeText(getActivity(), preference.getSummary(), Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -220,7 +202,7 @@ class SettingsFragment extends PreferenceFragment implements SharedPreferences.O
         example_text.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                mPreferences.setFolderName(preference.getSummary().toString());
+//                mPreferences.setFolderName(preference.getSummary().toString());
                 return true;
             }
         });
@@ -268,6 +250,266 @@ class SettingsFragment extends PreferenceFragment implements SharedPreferences.O
  * immediately updated upon calling this method. The exact display format is
  * dependent on the type of preference.
  *
+ * @see #sBindPreferenceSummaryToValueListener
+ * <p/>
+ * This method stops fragment injection in malicious applications.
+ * Make sure to deny any unknown fragments here.
+ * <p/>
+ * This fragment shows general preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * This fragment shows notification preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * Helper method to determine if the device has an extra-large screen. For
+ * example, 10" tablets are extra-large.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * A preference value change listener that updates the preference's summary
+ * to reflect its new value.
+ * <p/>
+ * Binds a preference's summary to its value. More specifically, when the
+ * preference's value is changed, its summary (line of text below the
+ * preference title) is updated to reflect the value. The summary is also
+ * immediately updated upon calling this method. The exact display format is
+ * dependent on the type of preference.
+ * @see #sBindPreferenceSummaryToValueListener
+ * <p/>
+ * This method stops fragment injection in malicious applications.
+ * Make sure to deny any unknown fragments here.
+ * <p/>
+ * This fragment shows general preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * This fragment shows notification preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * Helper method to determine if the device has an extra-large screen. For
+ * example, 10" tablets are extra-large.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * A preference value change listener that updates the preference's summary
+ * to reflect its new value.
+ * <p/>
+ * Binds a preference's summary to its value. More specifically, when the
+ * preference's value is changed, its summary (line of text below the
+ * preference title) is updated to reflect the value. The summary is also
+ * immediately updated upon calling this method. The exact display format is
+ * dependent on the type of preference.
+ * @see #sBindPreferenceSummaryToValueListener
+ * <p/>
+ * This method stops fragment injection in malicious applications.
+ * Make sure to deny any unknown fragments here.
+ * <p/>
+ * This fragment shows general preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * This fragment shows notification preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * Helper method to determine if the device has an extra-large screen. For
+ * example, 10" tablets are extra-large.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * A preference value change listener that updates the preference's summary
+ * to reflect its new value.
+ * <p/>
+ * Binds a preference's summary to its value. More specifically, when the
+ * preference's value is changed, its summary (line of text below the
+ * preference title) is updated to reflect the value. The summary is also
+ * immediately updated upon calling this method. The exact display format is
+ * dependent on the type of preference.
+ * @see #sBindPreferenceSummaryToValueListener
+ * <p/>
+ * This method stops fragment injection in malicious applications.
+ * Make sure to deny any unknown fragments here.
+ * <p/>
+ * This fragment shows general preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * This fragment shows notification preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * Helper method to determine if the device has an extra-large screen. For
+ * example, 10" tablets are extra-large.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * A preference value change listener that updates the preference's summary
+ * to reflect its new value.
+ * <p/>
+ * Binds a preference's summary to its value. More specifically, when the
+ * preference's value is changed, its summary (line of text below the
+ * preference title) is updated to reflect the value. The summary is also
+ * immediately updated upon calling this method. The exact display format is
+ * dependent on the type of preference.
+ * @see #sBindPreferenceSummaryToValueListener
+ * <p/>
+ * This method stops fragment injection in malicious applications.
+ * Make sure to deny any unknown fragments here.
+ * <p/>
+ * This fragment shows general preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * This fragment shows notification preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * Helper method to determine if the device has an extra-large screen. For
+ * example, 10" tablets are extra-large.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * A preference value change listener that updates the preference's summary
+ * to reflect its new value.
+ * <p/>
+ * Binds a preference's summary to its value. More specifically, when the
+ * preference's value is changed, its summary (line of text below the
+ * preference title) is updated to reflect the value. The summary is also
+ * immediately updated upon calling this method. The exact display format is
+ * dependent on the type of preference.
+ * @see #sBindPreferenceSummaryToValueListener
+ * <p/>
+ * This method stops fragment injection in malicious applications.
+ * Make sure to deny any unknown fragments here.
+ * <p/>
+ * This fragment shows general preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * This fragment shows notification preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * Helper method to determine if the device has an extra-large screen. For
+ * example, 10" tablets are extra-large.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * A preference value change listener that updates the preference's summary
+ * to reflect its new value.
+ * <p/>
+ * Binds a preference's summary to its value. More specifically, when the
+ * preference's value is changed, its summary (line of text below the
+ * preference title) is updated to reflect the value. The summary is also
+ * immediately updated upon calling this method. The exact display format is
+ * dependent on the type of preference.
+ * @see #sBindPreferenceSummaryToValueListener
+ * <p/>
+ * This method stops fragment injection in malicious applications.
+ * Make sure to deny any unknown fragments here.
+ * <p/>
+ * This fragment shows general preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * This fragment shows notification preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * Helper method to determine if the device has an extra-large screen. For
+ * example, 10" tablets are extra-large.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * A preference value change listener that updates the preference's summary
+ * to reflect its new value.
+ * <p/>
+ * Binds a preference's summary to its value. More specifically, when the
+ * preference's value is changed, its summary (line of text below the
+ * preference title) is updated to reflect the value. The summary is also
+ * immediately updated upon calling this method. The exact display format is
+ * dependent on the type of preference.
+ * @see #sBindPreferenceSummaryToValueListener
+ * <p/>
+ * This method stops fragment injection in malicious applications.
+ * Make sure to deny any unknown fragments here.
+ * <p/>
+ * This fragment shows general preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * This fragment shows notification preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * Helper method to determine if the device has an extra-large screen. For
+ * example, 10" tablets are extra-large.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * A preference value change listener that updates the preference's summary
+ * to reflect its new value.
+ * <p/>
+ * Binds a preference's summary to its value. More specifically, when the
+ * preference's value is changed, its summary (line of text below the
+ * preference title) is updated to reflect the value. The summary is also
+ * immediately updated upon calling this method. The exact display format is
+ * dependent on the type of preference.
+ * @see #sBindPreferenceSummaryToValueListener
+ * <p/>
+ * This method stops fragment injection in malicious applications.
+ * Make sure to deny any unknown fragments here.
+ * <p/>
+ * This fragment shows general preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * This fragment shows notification preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * Helper method to determine if the device has an extra-large screen. For
+ * example, 10" tablets are extra-large.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * A preference value change listener that updates the preference's summary
+ * to reflect its new value.
+ * <p/>
+ * Binds a preference's summary to its value. More specifically, when the
+ * preference's value is changed, its summary (line of text below the
+ * preference title) is updated to reflect the value. The summary is also
+ * immediately updated upon calling this method. The exact display format is
+ * dependent on the type of preference.
+ * @see #sBindPreferenceSummaryToValueListener
+ * <p/>
+ * This method stops fragment injection in malicious applications.
+ * Make sure to deny any unknown fragments here.
+ * <p/>
+ * This fragment shows general preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * This fragment shows notification preferences only. It is used when the
+ * activity is showing a two-pane settings UI.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * Helper method to determine if the device has an extra-large screen. For
+ * example, 10" tablets are extra-large.
+ * <p/>
+ * {@inheritDoc}
+ * <p/>
+ * A preference value change listener that updates the preference's summary
+ * to reflect its new value.
+ * <p/>
+ * Binds a preference's summary to its value. More specifically, when the
+ * preference's value is changed, its summary (line of text below the
+ * preference title) is updated to reflect the value. The summary is also
+ * immediately updated upon calling this method. The exact display format is
+ * dependent on the type of preference.
  * @see #sBindPreferenceSummaryToValueListener
  * <p/>
  * This method stops fragment injection in malicious applications.
