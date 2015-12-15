@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -94,7 +95,7 @@ public class MainDrawerActivity extends AppCompatActivity
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(MainDrawerActivity.this);
         Constant.GalleryName = prefs.getString("FOLDER_NAME", "wallpaper");
-        String no_rows_string = prefs.getString("selected_row", "");
+        String no_rows_string = prefs.getString("selected_row", "2");
         no_rows = Integer.parseInt(no_rows_string);
 
         Log.i("GalleryName", "=>" + Constant.GalleryName + mPrefence.getFolderName() + "==>" + mPrefence.getNo_of_rows());
@@ -212,6 +213,8 @@ public class MainDrawerActivity extends AppCompatActivity
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
+    RecyclerView.LayoutManager mLayoutManager;
+
     public void setAdapter() {
 
         adapter = new CardListAdapater(MainDrawerActivity.this, Responsemodel);
@@ -221,8 +224,13 @@ public class MainDrawerActivity extends AppCompatActivity
 
 
         Log.i("no_rows", "=>" + no_rows);
-        StaggeredGridLayoutManager stagerlayout = new StaggeredGridLayoutManager(no_rows, LinearLayoutManager.VERTICAL);
-        rv_list_card.setLayoutManager(stagerlayout);
+        if (no_rows > 0) {
+            mLayoutManager = new GridLayoutManager(this, Integer.valueOf(no_rows));
+        } else {
+            mLayoutManager = new GridLayoutManager(this, 2);
+        }
+
+        rv_list_card.setLayoutManager(mLayoutManager);
         rv_list_card.scrollToPosition(Responsemodel.size() - 1);
 
     }

@@ -14,6 +14,7 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.pemikir.desktopper.Activity.SplashActivity;
 import com.pemikir.desktopper.Model.Constant;
 import com.pemikir.desktopper.R;
 
@@ -193,6 +194,7 @@ public class Utils {
             Toast.makeText(context, "Network Error..", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 
 }

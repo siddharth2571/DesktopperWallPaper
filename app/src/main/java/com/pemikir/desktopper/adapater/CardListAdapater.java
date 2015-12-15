@@ -84,7 +84,7 @@ public class CardListAdapater extends SelectableAdapter<CardListAdapater.CardLis
         }
 
 //        Picasso.with(context).load(cardList.get(position).getImage().getPreview().getUrl()).into(holder.card_image, null);
-        String[] MaterialColor = new String[]{"#abcbed", "#008008", "#303030"};
+        String[] MaterialColor = new String[]{"#f44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#03A9F4", "#009688", "#4CAF50", "#FF9800"};
         int randomColor = new Random().nextInt(MaterialColor.length);
         holder.card_image.setBackgroundColor(Color.parseColor(MaterialColor[randomColor]));
 
