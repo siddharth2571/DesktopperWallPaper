@@ -47,6 +47,13 @@ import com.pemikir.desktopper.Rectrofit.iDesktoper;
 import com.pemikir.desktopper.Utility.PreferencesUtility;
 import com.pemikir.desktopper.Utility.Utils;
 import com.pemikir.desktopper.adapater.CardListAdapater;
+import com.startapp.android.publish.Ad;
+import com.startapp.android.publish.AdEventListener;
+import com.startapp.android.publish.StartAppAd;
+import com.startapp.android.publish.StartAppSDK;
+import com.startapp.android.publish.nativead.NativeAdDetails;
+import com.startapp.android.publish.nativead.NativeAdPreferences;
+import com.startapp.android.publish.nativead.StartAppNativeAd;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,16 +86,38 @@ public class MainDrawerActivity extends AppCompatActivity
     PreferencesUtility mPrefence;
     Menu menu_main;
     int no_rows = 2;
+    private StartAppNativeAd startAppNativeAd = new StartAppNativeAd(this);
+
+    StartAppAd startAd = new StartAppAd(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maindrawer);
 
+
+        setContentView(R.layout.activity_maindrawer);
         session = new SessionManager(getApplicationContext());
         mPrefence = new PreferencesUtility(MainDrawerActivity.this);
         mApplication = (DesktoperAPP) getApplicationContext();
 
+        startAd.loadAd(new AdEventListener() {
+            @Override
+            public void onReceiveAd(Ad ad) {
+                System.out.println("Ad received");
+
+                startAd.showAd();
+            }
+
+            @Override
+            public void onFailedToReceiveAd(Ad ad) {
+
+            }
+        });
+
+
+//        startAd.loadAd();
+
+//        StartAppAd.showSlider(this);
 
 //        set gallary name and no of rows ============================
 
@@ -105,10 +134,16 @@ public class MainDrawerActivity extends AppCompatActivity
 
         init();
         setDrawerLayout();
-        DesktoperModelResponce desktopper = new Gson().fromJson(session.getFirstjsonoffline(), DesktoperModelResponce.class);
-        Log.d("Sessionoffline", "=>" + desktopper.getResponse().get(0).getImage().getUrl());
-        Responsemodel = desktopper.getResponse();
-        setAdapter();
+
+        try {
+            DesktoperModelResponce desktopper = new Gson().fromJson(session.getFirstjsonoffline(), DesktoperModelResponce.class);
+//            Log.d("Sessionoffline", "=>" + desktopper.getResponse().get(0).getImage().getUrl());
+            Responsemodel = desktopper.getResponse();
+            setAdapter();
+        } catch (Exception e) {
+            finish();
+            Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -278,6 +313,7 @@ public class MainDrawerActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+        startAd.onBackPressed();
     }
 
     @Override

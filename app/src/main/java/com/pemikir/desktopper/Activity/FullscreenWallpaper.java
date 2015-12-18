@@ -22,6 +22,10 @@ import com.pemikir.desktopper.Utility.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
+import com.startapp.android.publish.Ad;
+import com.startapp.android.publish.AdEventListener;
+import com.startapp.android.publish.StartAppAd;
+import com.startapp.android.publish.nativead.StartAppNativeAd;
 
 public class FullscreenWallpaper extends AppCompatActivity {
 
@@ -35,11 +39,27 @@ public class FullscreenWallpaper extends AppCompatActivity {
 
     GoogleProgressBar googleprogressbar;
     Toolbar toolbar;
+    private StartAppNativeAd startAppNativeAd = new StartAppNativeAd(this);
+    private StartAppAd startAppAd = new StartAppAd(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen_wallpaper);
+
+        startAppAd.loadAd(new AdEventListener() {
+            @Override
+            public void onReceiveAd(Ad ad) {
+                System.out.println("Ad received");
+//                Toast.makeText(getApplicationContext(), "received", Toast.LENGTH_SHORT).show();
+                startAppAd.showAd();
+            }
+
+            @Override
+            public void onFailedToReceiveAd(Ad ad) {
+//                Toast.makeText(MainDrawerActivity.this, "failed", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -64,7 +84,7 @@ public class FullscreenWallpaper extends AppCompatActivity {
         Log.i(FullscreenWallpaper.class.getSimpleName(), getURL);
 //        fullImage.bringToFront();
 
-        Picasso.with(this).load(getURL).memoryPolicy(MemoryPolicy.NO_CACHE).error(R.drawable.ic_launcher).into(fullImage, new Callback() {
+        Picasso.with(this).load(getURL).memoryPolicy(MemoryPolicy.NO_CACHE).error(R.drawable.image).into(fullImage, new Callback() {
             @Override
             public void onSuccess() {
                 bitmap = ((BitmapDrawable) fullImage.getDrawable()).getBitmap();
