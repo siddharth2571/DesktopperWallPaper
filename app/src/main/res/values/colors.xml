@@ -16,7 +16,14 @@
         <item>@color/colorPrimaryDark</item>
         <item>@color/colorAccent</item>
         <item>@color/colorAccent1</item>
-
     </array>
+
+    <array name="spalshprogress">
+        <item>@android:color/white</item>
+        <item>@android:color/white</item>
+        <item>@android:color/white</item>
+        <item>@android:color/white</item>
+    </array>
+
 
 </resources>
