@@ -31,12 +31,12 @@
         android:layout_toEndOf="@+id/WallpaperOfTheDay_logo"
         android:layout_toRightOf="@+id/WallpaperOfTheDay_logo"
         android:background="@drawable/fab_label_background"
-        android:gravity="end"
-
+        android:gravity="center"
+        android:paddingBottom="8dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Wallpaper Of The Day"
         android:textColor="@android:color/white"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView"

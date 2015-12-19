@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F80B5</color>
-    <color name="colorPrimaryDark">#300F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorAccent1">#FF8081</color>
+    <color name="colorPrimary">#F44336</color>
+    <color name="colorPrimaryDark">#9C27B0</color>
+    <color name="colorAccent">#3F51B5</color>
+    <color name="colorAccent1">#009688</color>
     <color name="white_40">#40ffffff</color>
     <color name="black_40">#40000000</color>
     <color name="black_50">#66000000</color>
     <color name="black_70">#ac000000</color>
     <color name="black_90">#ee000000</color>
+
 
 
     <array name="progress">
